@@ -97,6 +97,7 @@ Method Area, Heap 영역 등은 좀 더 공부를 한 후 추가하도록 하겠
 
 # 📚 Reference
 
+- [Java의 정석](https://product.kyobobook.co.kr/detail/S000001550352)
 - [Seize the day!](https://doozi0316.tistory.com/entry/1%EC%A3%BC%EC%B0%A8-JVM%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%9E%90%EB%B0%94-%EC%BD%94%EB%93%9C%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%8B%A4%ED%96%89%ED%95%98%EB%8A%94-%EA%B2%83%EC%9D%B8%EA%B0%80)
 - ["JVM이란 무엇인가"자바 가상 머신 이해하기](https://www.itworld.co.kr/news/110837)
 - [NAVER D2 - JVM Internal](https://d2.naver.com/helloworld/1230)
