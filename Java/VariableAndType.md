@@ -198,7 +198,7 @@ int num = (int) ch;	// num = 65
 
 #### 문자열 String
 
-문자열 String은 사실 기본형은 아니지만 애매한 선상에 있다고 봐도 무방합니다.
+문자열 String은 사실 기본형은 아니지만 특이점이 있어 여기서 간단하게만 다루겠습니다.
 
 ```java
 public class Exam {
