@@ -69,3 +69,9 @@ StringBuilder는 StringBuffer에서 쓰레드의 동기화만 제외하고 완�
 ```java
 StringBuilder sb = new StringBuilder();
 ```
+
+# 📚 Reference
+
+- [Java의 정석](https://product.kyobobook.co.kr/detail/S000001550352)
+- [TCP School](http://tcpschool.com/java/intro)
+- [ifUwanna IT](https://ifuwanna.tistory.com/221)
