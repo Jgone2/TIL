@@ -124,7 +124,7 @@ case 100: System.out.print("A+"); break;
 default: System.out.print("잘못된 입력값"); break;
 ```
 
-사칙연산을 예제로 `break`와 `defaul`를 추가 해보겠습니다.
+아래의 사칙연산 예제와 같이 switch문에서 `break`를 사용하지 않는 방법도 있습니다. 하지만 반복적인 계산을 원할때는 `return`을 사용하면 바로 메서드의 수행을 종료시키기 때문에 계산된 결과를 변수에 담아서 수행하셔야 합니다.
 
 ```java
 char oper = '+';
