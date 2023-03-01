@@ -308,4 +308,230 @@ final double PI = 3.14;
 | default     | 동일 패키지 내에서만 접근 가능                     |
 | private     | 동일 클래스에서만 접근 가능                        |
 
+위의 4가지 접근 제어자를 접근 제한 범위에 따라 정렬하면 public -> protected -> default -> private 순으로 더 높은 제한이 이루어 집니다. 이 중에서 `default`는 접근 제어자를 붙이지 않았을 경우 default로 설정이 됩니다.
+
 # 8. getter & setter
+
+getter와 setter는 앞서 알아본 접근 제어자 중 `private`에서 변수에 접근이 불가능 할 때 변수의 데이터 값을 얻고싶거나 수정하고 싶을 때 사용하는 메서드 입니다. 먼저 예시로 알아보겠습니다.
+
+```java
+public class GetterSetterEx {
+
+    public static void main(String[] args) {
+        Student kim = new Student();
+        kim.setSchoolName("자바고");
+        kim.setName("김코딩");
+        kim.setAge(18);
+
+        System.out.printf("%s 학생은 %d세로 %s에 다니고 있습니다.", kim.getName(), kim.getAge(), kim.getSchoolName());
+    }
+
+}
+
+public class Student {
+    private String schoolName;
+    private String name;
+    private int age;
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+```
+
+class `Student`에서 모든 멤버변수들이 접근 제어자 `private`로 선언되어 외부 클래스에서 사용할 수 없게 됐습니다. 위의 예시로 보았을 때 `setter`메서드는 데이터 값을 수정할 수 있게 해주고 `getter`메서드는 변수에 할당된 값을 읽어오는 것을 알 수 있습니다.
+
+필요에 따라 `setter`메서드만 부여할 수도 `getter`메서드만 부여할 수도 있으므로 외부 클래스에서 값이 수정간으하게 혹은 읽어올 수만 있도록 의도하여 개발할 수 있습니다.
+
+# 9. 다형성
+
+다형성은 **하나의 객체가 여러가지 형태를 가질 수 있는 성질**을 의미합니다. 자바에서는 **상위클래스 타입의 참조변수로 하위클래스의 인스턴스를 참조할 수 있도록**한다는 것을 의미합니다.
+
+```java
+public class ClassTest {
+	public static void main(String[] args) {
+    	UltraClass u = new UltraClass();
+        LowerClass1 x1 = new LowerClass1();
+        UltraClass x2 = new LowerClass2();
+
+        u.classInfo();
+        x1.classInfo();
+        x2.classInfo();
+    }
+}
+
+class UltraClass {
+	public void classInfo() {
+    	System.out.println("This is UltraClass");
+    }
+}
+
+class LowerClass1 extends UltraClass {
+	public void classInfo() {
+    	System.out.println("This is LowerClass1");
+    }
+}
+
+class LowerClass2 extends UltraClass {
+	public void classInfo() {
+    	System.out.println("This is LowerClass2");
+    }
+}
+
+/* ====== result ======
+This is UltraClass
+This is LowerClass1
+This is LowerClass2
+======================= */
+```
+
+위의 에시에서 처럼 LowerClass2인스턴스를 참조하는 변수 x2는 `UltraClass`로 생성되어 있습니다. 하지만 그래도 result에서는 LowerClass2의 classInfo()를 잘 참조해서 결과값이 출력된 것을 알 수 있습니다.
+
+**상위 클래스 타입의 참조변수로 하위 클래스의 객체를 참조할 수 있는** 다형성의 핵심적인 특성을 이용했기 때문입니다. 그러나 참조변수가 **상위 클래스 타입이기 때문에 상위 클래스의 멤버의 수만큼만 사용가능**합니다.
+
+## 1. 참조변수의 형변환
+
+참조변수도 기본형 변수처럼 형변환이 가능합니다. 다만 참조변수의 형변환을 수행하기 위해서는 다음과 같은 조건을 충족해야 합니다.
+
+> - 서로 상속관계에 있을 것
+
+- 하위 클래스 -> 상위클래스(업캐스팅): 형변환 연산자 생략 가능
+- 상위 클래스 -> 하위 클래스(다운캐스팅): 형변환 연산자 필수 명시
+
+위의 예제에서 x2의 경우가 '하위클래스 -> 상위클래스'의 형변환이라고 볼 수 있고 반대의 경우는
+
+```java
+UltraClass u = new UltraClass();
+LowerClass2 x2 = (LowerClass2) u;
+```
+
+로 형변환을 수행할 수 있겠습니다.
+
+## 2. instanceof 연산자
+
+`instanceof`연산자는 참조변수가 참조하고 있는 타입을 알아보기 위해 사용합니다. 연산의 결과를 `boolean`형으로 반환하며 `true`를 반환값으로 얻으면 형변환이 가능한 타입 입니다.
+
+```java
+참조변수 instanceof 타입
+
+public class InstanceOfEx {
+	public static void main(String[] args) {
+    	Animal animal = new Animal();
+        System.out.println(animal instanceof Object);	// true
+        System.out.println(animal instanceof Animal);	// true
+        System.out.println(animal instanceof Dog);		// false
+        System.out.println(animal instanceof Cat);		// false
+
+        Aniaml dog = new Dog();
+        System.out.println(dog instanceof Object);	// true
+        System.out.println(dog instanceof Animal);	// true
+        System.out.println(dog instanceof Dog);		// true
+        System.out.println(dog instanceof Cat);		// false
+    }
+}
+
+class Animal{};
+class Dog extends Animal{};
+class Cat extends Aniaml{};
+```
+
+# 10. 추상화
+
+`추상`은 사전적 의미로 `여러 가지 사물이나 개념에서 공통되는 특성이나 속성 따위를 추출하여 파악하는 작용`을 말합니다. 여기서 자바에서의 추상화에 해당하는 부분이 **공통되는 특성을 모아서 추출하여 정의해놓은 것**을 의미합니다.
+
+자바에서는 추상화를 구현하기 위해 `추상 클래스`와 `인터페이스`를 사용합니다.
+
+## 1. abstract 제어자
+
+앞서 제어자 파트에서 `abstract`를 언급한 적이 있습니다. `abstract`제어자는 '추상 메서드'와 '추상 클래스'를 구현하기 위해 사용하는 제어자 입니다. 클래스 내에 추상 메서드가 포함되어있으면 해당 클래스는 자동으로 추상 클래스가 됩니다.
+
+```java
+abstract class 클래스명 {			// 추상 메서드가 최소 하나 이상 포함되어 있어야함
+	abstract 반환타입 메서드명();	// 메서드 바디가 없는 추상 메서드
+}
+```
+
+위의 예제를 보면 알 수 있듯이 추상 메서드에는 메서드 바디`{}`가 존재하지 않는다는 것을 알 수 있습니다. 이는 `abstract`가 `추상적인`, `미완성`의 뜻을 내포하고 있는데 구체화되지 않은 `미완성 메스드`, `미완성 클래스`로 설계하기 위한 제어자이기 때문입니다.  
+추상 메서드/클래스는 미완성이기 때문에 객체 생성도 불가능합니다.
+
+## 2. 추상 클래스
+
+추상 클래스는 앞서 이야기 했듯이 `미완성 설계도`라고 할 수 있습니다. 미완성 설계도라고 하는 이유는 완성되지 못한 메서드를 가지고 있기 때문입니다.
+
+객체로의 생성도 불가능한 추상클래스를 사용하는 이유는 상속을 받는 하위 클래스들의 틀로써 역할을 수행할 수 있기 때문입니다.
+
+하위 클래스들에서 무조건 선언해야하는 클래스들의 모음을 추상 클래스에 선언부만 작성해놓으면 하위 클래스에서 오버라이딩하여 각자 세부 사항을 설계할 수 있으므로 효율적으로 코드를 작성할 수 있습니다.
+
+```java
+public class PlayerExample {
+	public static void main(String[] args) {
+    	Player song = new Song();
+        Video video = new Video();
+        song.brand();
+        video.brand();
+    }
+}
+
+abstract class Player {
+	public String kind;
+    public abstract void brand();
+}
+
+class Song extends Player {
+	public Song() {
+    	this.kind = "MP3 Player";
+    }
+
+    public void brand() {
+    	System.out.println("IRIVER");
+    }
+}
+
+class Video extends Player {
+	public Video() {
+    	this.kind = "Pad";
+    }
+
+    public void brand() {
+    	System.out.println("Apple");
+    }
+}
+
+/* ====== result =======
+IRIVER
+Apple
+======================== */
+```
+
+예제를 작성하시다보면 하위 클래스가 상위 추상 클래스의 추상 메서드를 오버라이딩 하지 않았을 때 에러가 발생함을 알 수 있을 것입니다. 이렇게 추상 클래스로 하위 클래스들의 틀을 작성해 놓으면 구현헤야 할 메소드를 빠짐없이 오버라이딩하여 각각 상황에 맞는 메서드 구현을 가능하게 합니다.
+
+추상화는 **상속계층도의 상층부에 위치할 수록 추상화의 정도가 높고 아래로 내려갈 수록 구체화**됩니다.
+
+# 11. 인터페이스(interface)
+
+인터페이스도 일종의 추상 클래스라고 할 수 있습니다.
+
+# 📚 Reference
+
+- [Java의 정석](https://product.kyobobook.co.kr/detail/S000001550352)
+- [CodeStates](https://www.codestates.com/course/backend-engineering?gclid=Cj0KCQiAo-yfBhD_ARIsANr56g7yG-RoEgb1FYjnCetXZpz1jYm6-RtQCTqC_qgipon5_Aw8OyY4lj8aAizpEALw_wcB)
