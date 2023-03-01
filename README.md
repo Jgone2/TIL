@@ -12,5 +12,5 @@
 - [반복문](./Java/forWhile.md)
 - [배열(array)](./Java/Array.md)
 - [객체지향프로그래밍1](./Java/OOP1.md)
-- [객체지향프로그래밍](./Java/OOP2.md)
+- [객체지향프로그래밍2](./Java/OOP2.md)
   </details>
