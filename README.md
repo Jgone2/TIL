@@ -12,6 +12,8 @@
 - [배열(array)](./Java/Array.md)
 - [객체지향프로그래밍1](./Java/OOP1.md)
 - [객체지향프로그래밍2](./Java/OOP2.md)
+- [열거형(Enum)](./Java/Enum.md)
+- [제네릭(Generic)](./Java/Generic.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
@@ -22,6 +24,8 @@
 - [x] Java 기본 문법
 - [x] OOP(SOLID, GRASP 추가 필요)
 - [x] JVM(추가 공부 필요로 일시 중단)
+- [x] 열거형
+- [ ] Generic
 - [ ] Collection
 - [ ] Annotation
 - [ ] Lambda
