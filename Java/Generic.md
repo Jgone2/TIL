@@ -147,3 +147,98 @@ class Box<T extends Phone & Apple> {
 > - < ? extends T > : 와일드 카드의 상한 제한. T와 그 자손들만 대입 가능
 
 - < ? super T > : 와일드 카드의 하한 제한. T와 그 조상들만 대입 가능
+
+와일드 카드의 예제로 다음과 같은 클래스를 정의 했습니다. 휴대폰 클래스가 있고 휴대폰 클래스를 상속받는 아이폰과 갤럭시 그리고 아이폰과 갤럭시를 상속받는 각 세부 모델 클래스를 정의했습니다.
+
+```java
+class Phone{}
+
+class IPhone extends Phone{}
+class Galaxy extends Phone{}
+
+class IPhone14 extends IPhone{}
+class S23 extends Galaxy{}
+
+class User<T> {
+	public T phone;
+
+    public User(T phone) {
+    	this.phone = phone;
+    }
+```
+
+여기서 각 아이폰과 갤럭시의 각 기능을 분류해보겠습니다.
+
+- 공통
+  - `call`: 아이폰과 갤럭시 두 기종 모두 통화가 가능
+- 아이폰
+  - `applePay`: 아이폰에서만 사용 가능
+  - `faceId`: 아이폰에서만 사용 가능
+- 갤럭시
+  - `samsungPay`: 갤럭시에서만 사용 가능
+
+휴대폰 - 갤럭시/아이폰의 기능을 최소한으로 나눠보았습니다.
+
+```java
+class PhoneFunc {
+	public static void call(User<? extends Phone> user) {
+    	System.out.println("모든 Phone은 통화를 할 수 있습니다.");
+    	System.out.println("user.phone = " + user.phone.getClass().getSimpleName());
+    }
+
+
+	public static void faceId(User<? super IPhone> user) {
+    	System.out.println("faceId는 IPhone에서만 사용 가능 합니다");
+        System.out.println("user.phone = " + user.phone.getClass().getSimpleName());
+    }
+
+    public static void applePay(User<? extends IPhone> user) {
+    	System.out.println("ApplePay는 IPhone에서만 사용 가능 합니다");
+        System.out.println("user.phone = " + user.phone.getClass().getSimpleName());
+    }
+
+	public static void samsungPay(User<? extends Galaxy> user) {
+    	System.out.println("SamsungPay는 Galaxy에서만 사용 가능 합니다");
+        System.out.println("user.phone = " + user.phone.getClass().getSimpleName());
+    }
+}
+```
+
+위의 예제에서 `call`, `applePay`, `samsungPay`는 `extends`키워드를 사용했고 `faceId`는 `super`키워드를 사용 했습니다.
+
+먼저 `extends`키워드를 사용해서 구현한 메서드 먼저 살펴보겠습니다.
+
+위의 예제를 호출하면 `call`은 `Phone`이거나 상속받고 있는 `IPhone`과 `Galaxy`. 그리고 아이폰14와 S23기종까지 모두 호출할 수 있습니다.
+
+그리고 `applePay`는 `IPhone`타입이거나 상속받고 있는 아이폰14에서 호출이 가능합니다. 이와 마찬가지로 `samsungPay`는 `Galaxy`타입이거나 상속받고 있는 S23에서 호출이 가능합니다.
+
+그리고 `super`키워드를 사용한 `faceId`를 각 객체에서 호출하면 타입이 `Galaxy`이거나 상속받고 있는 `S23`의 경우 당연히 호출할 수 없고 `super`키워드가 하한 제한이기 때문에 `IPhone`의 하위 클래스인 아이폰14에서도 `faceId`는 호출될 수 없습니다. 오직 `IPhone`클래스과 상위 클래스인 `Phone`클래스에서만 호출할 수 있습니다.
+
+# 3. 제네릭 메서드
+
+제네릭 메서드는 메서드의 선언부에 제네릭 타입이 선언된 메서드를 말합니다. 제네릭 메서드의 타입 선언은 반환타입 앞에서 선언됩니다. 또한 제네릭 클래스의 타입 매개변수와 제네릭 메서드의 타입 매개변수는 별개의 것으로 적용 됩니다.
+
+```java
+class Test<T> {
+	public <T> void add(T element) {
+		// 구현부
+	}
+}
+
+class GenericTest {
+	public static void main(String[] args) {
+    	Test<String> test = new Test<>();	// Test<T>가 <String>으로 지정
+        test.<Integer>add(10);				// <T> void add가 <Integer>로 지정 -> <Integer> 생략가능
+    }
+}
+```
+
+또한 제네릭 메서드를 사용하면 메서드가 호출되는 시점에 제네릭 타입이 결정되므로 정의하는 시점에서 `charAt()`, `length()`와 같은 `String`클래스의 메서드를 사용할 수 없습니다.
+
+그러나 최상위 클래스인 `Object`클래스의 메서드(`equals()`, `toString()` ...)는 사용가능 합니다.
+
+# 📚 Reference
+
+- [Java의 정석](https://product.kyobobook.co.kr/detail/S000001550352)
+- [TCP School](http://tcpschool.com/java/intro)
+- [CodeStates](https://www.codestates.com/course/backend-engineering)
