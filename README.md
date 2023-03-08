@@ -14,6 +14,7 @@
 - [객체지향프로그래밍2](./Java/OOP2.md)
 - [열거형(Enum)](./Java/Enum.md)
 - [제네릭(Generic)](./Java/Generic.md)
+- [예외처리(Exception Handling](./Java/ExceptionHandling.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
@@ -25,7 +26,7 @@
 - [x] OOP(SOLID, GRASP 추가 필요)
 - [x] JVM(추가 공부 필요로 일시 중단)
 - [x] 열거형
-- [ ] Generic
+- [x] Generic
 - [ ] Collection
 - [ ] Annotation
 - [ ] Lambda
