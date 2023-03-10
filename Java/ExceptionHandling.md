@@ -45,7 +45,59 @@ Exception in thread "main" java.lang.ArithmeticException: / by zero
 
 자바에서는 예외와 오류를 클래스로 정의해두었습니다. 자바는 예외가 발생하면 클래스에서 인스턴스화를 통해 예외처리를 진행합니다.
 
-위의 그림은 예외 클래스의 상속 계층도 입니다. `예외(Exception)`의 최상위 클래스는 `Exception`클래스 인 것을 확인할 수 있습니다.
+위의 그림은 예외 클래스의 상속 계층도 입니다. `예외(Exception)`의 최상위 클래스는 `Exception`클래스 인 것을 확인할 수 있습니다. 여기서 예외의 최상위 클래스 `Exception`클래스는 `RuntimeException`과 다른 일반 예외 클래스들이 존재합니다.
+
+## 1. 일반 예외 클래스(Exception)
+
+일반 예외 클래스는 주로 외부의 영향으로 발생할 수 있는 오류들로 보통 사용자에 의해서 발생하는 경우가 많습니다. 예를들어
+
+- 잘못된 클래스명(ClassNotFoundException)
+- 잘못된 데이터 입력 형식(DataFormatException)
+- 존재하지 않는 파일 호출(FileNotFoundException)
+  등이 존재합니다.
+
+## 2. 실행 예외 클래스(Runtime Exception)
+
+실행 예외 클래스에는 주로 개발자의 실수에 의해서 발생될 수 있는 예외들로 자바 문법 요소와 관련된 오류들이 포함되어 있습니다. 예를 들어
+
+- 클래스간의 형변환 오류(ClassCastException)
+- 벗어난 배열 범위 지정(ArrayIndexOutOfBoundsException)
+- 값이 Null인 참조변수의 호출(NullPointerException)
+- 정수를 0으로 나눔(ArithmeticException)
+  등이 실행 예외 클래스에 속합니다.
+
+# 3. try - catch문
+
+앞서 예외는 개발자가 예측이 가능하기 때문에 발생한 예외에 대해 처리하는 코드 작성을 미리 해 줄 수 있다고 했습니다. 자바에서는 예외 처리를 위한 코드 작성을 위해 `try-catch`문을 제공합니다.
+
+예외처리는 프로그램 실행 시 발생할 수 있는 예외에 대한 처리 코드를 미리 작성함으로써, 에러 발생 시 프로그램의 비정상적인 종료를 예방해주는 역할을 하며 다음과 같이 작성해 줄 수 있습니다.
+
+```java
+try {
+	// 예외가 발생할 가능성이 있는 코드 작성
+} catch(Exception1 e) {
+	// Exception1 유형의 예외 발생시 실행코드
+} catch(Exception2 e) {
+	// Exception2 유형의 예외 발생시 실행 코드
+} finally {
+	// 예외 발생 여부와 상관없이 항상 실행
+	// 필수 옵션은 아님
+}
+```
+
+`try`의 블럭 안에는 예외가 발생할 가능성이 있는 코드를 입력합니다. 만약 예외 없이 정상적인 실행이 된다면 `catch`블럭은 실행하지 않고 바로 `final`블럭 내의 코드가 실행됩니다.
+
+만약 예외가 발생했지만 `catch`블럭에 일치하는 예외타입이 없다면 당연하게도 실행되지 않습니다.
+
+# 4. 예외 전가
+
+앞서 소개해드린 `try-catch`문을 사용하는 것 외에도 예외 처리를 할 수 있는 방법이 있습니다. 바로 메서드에 `throws` 키워드를 사용하여 메서드 내에서 발생할 수 있는 예외 클래스를 작성해 주면 됩니다.
+
+```java
+public void Example() throws Exception1, Exception2 {}
+```
+
+만약 `throws`키워드 뒤에 `Exception`을 작성하면 `Exception`은 모든 예외의 최상위 클래스이기 때문에 모든 종류의 예외가 발생가능하다는 것을 의미합니다.
 
 # 📚 Reference
 
