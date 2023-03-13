@@ -16,7 +16,13 @@
 - [제네릭(Generic)](./Java/Generic.md)
 - [예외처리(Exception Handling](./Java/ExceptionHandling.md)
 
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br />
+
+## 💻 Web, HTTP, Servlet 및 CS, OS
+
+- [인터넷의 네트워크 연결방식](./CS/internet.md)
+
+<br /><br /><br /><br /><br /><br /><br /><br />
 
 # 🛠️ 작업 현황
 
@@ -27,6 +33,7 @@
 - [x] JVM(추가 공부 필요로 일시 중단)
 - [x] 열거형
 - [x] Generic
+- [ ] Exception Handling
 - [ ] Collection
 - [ ] Annotation
 - [ ] Lambda
