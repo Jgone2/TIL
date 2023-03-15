@@ -104,7 +104,7 @@ System.out.println(str2.length());	// 12
 
 예제를 보면 `java`는 길이 4, `Hello World!`는 12로 출력되는 걸 알 수 있습니다. `str2`를 출력해보면 공백도 하나의 index공간을 차지하고 있다는 점을 알 수 있습니다.
 
-## 3. subsring()
+## 3. substring()
 
 substring()메서드는 ()에 index 범위를 설정하여 범위에 해당하는 String 문자열을 반환합니다.
 
