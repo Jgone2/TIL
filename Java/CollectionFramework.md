@@ -241,3 +241,105 @@ private static ArrayList<Integer> setNewValue(ArrayList<Integer> lotto, boolean 
 수정할 때는 중복이 허용되는 등 오류가 있지만 arrayList에 값을 추가하고 수정해보는 용도로 봐주시면 감사하겠습니다.
 
 ### 2. LinkedList
+
+`LinkedList`는 위에서 언급했듯이 `ArrayList`보다 값의 수정함에 있어서 빠르게 처리할 수 있어 효율적으로 수정할 수 있는 리스트 입니다. 앞서 배열과 `ArrayList`에서는 배열 내의 데이터들이 연속적으로 존재했지만 `LinkedList`내의 데이터들은 불연속적으로 존재합니다.
+
+LinkedList에서 배열에서 index에 해당하는 것을 `Node`라고 하는데 이 각각의 `Node`들은 자신과 연결된 이전 요소 및 다음 요소의 주소값과 데이터로 구성되어 있습니다.
+
+`Node`에 이전 요소 및 다음 요소의 주소값이 포함되어 있기 때문에 정보 수정, 추가, 삭제 시 `prev(이전 요소)`와 `next(다음 요소)`의 참조값만 변경해주면 되기 때문에 리스트 중간 부분의 데이터를 수정, 추가, 삭제 등을 수행할 때 효율적으로 수행가능 합니다.
+
+그러나 데이터 검색 시에는 `LinkedList`를 사용하면 `prev`, `next`의 참조값을 사용하여 데이터를 순차적으로 탐색해야 하기 때문에 `ArrayList`를 사용할 때보다 비효율적이라는 단점도 존재합니다.
+
+> 💡 **List**
+
+- 데이터의 중복 허용 ⭕️
+- 저장 순서 유지 ⭕️
+- 중간 데이터의 잦은 수정: LinkedList
+- 순차적 수정 및 탐색: ArrayList
+
+## 3.Set<E\>
+
+`Set()`은 `List`와 다르게 데이터의 중복을 허용하지 않고, 저장 순서를 유지하지 않는 컬렉션입니다.
+
+### 1. HashSet
+
+`HashSet`은 `Set`인터페이스를 구현한 가장 대표적인 컬렉션입니다.
+
+```java
+HashSet<String> hashSetEx = new HashSet<String>();
+
+hashSetEx.add("Java");
+hashSetEx.add("Java");
+
+for(String s : hashSetEx) {
+	System.out.println(s);
+}
+
+/* ====== result ======
+Java
+=======================*/
+```
+
+### 2. TreeSet
+
+`TreeSet`은 **이진 탐색 트리(Binary Search Tree)** 형태로 데이터를 저장합니다. 마찬가지로 데이터 중복 저장을 허용하지 않고 저장 순서를 유지하지 않습니다.  
+![](https://velog.velcdn.com/images/jgone2/post/75465c8b-88a1-4547-b214-c3fe1ee9b35a/image.jpg)
+
+이진 탐색트리는 **하나의 부모 노드에 최대 두 개의 자식 노드와 연결되는 이진트리의 일종으로 정렬과 검색에 특화**된 자료구조 입니다.
+
+왼쪽 자식 노드의 값이 부모 노드 보다 값이 작으며 오른쪽 자식의 값은 부모 노드보다 큰 값을 가지는 특징이 있습니다.
+
+```java
+TreeSet<String> lang = new TreeSet<>();
+
+        lang.add("Java");
+        lang.add("Spring");
+        lang.add("Thymeleaf");
+
+        System.out.println(lang);
+        System.out.println(lang.first());
+        System.out.println(lang.last());
+
+/* ====== result ======
+[Java, Spring, Thymeleaf]
+Java
+Thymeleaf
+======================= */
+```
+
+> 💡 **Set**
+
+- 데이터 중복 허용 ❌
+- 저장 순서 유지 ❌
+
+## 4. Key<K, V\>
+
+`Map`은 `키(key)`와 `값(value)`으로 구성된 저장하는 구조를 가지고 있습니다. `Key`값을 가지고 있다는 점이 앞서 언급한 `List`와 `Set`과의 가장 큰 차이점입니다. 여기서 `key`와 `value`를 객체라고하고 이 객체를 **Entry객체**라고 합니다.
+
+`Map`에서 중요한 점은 `Key`값은 Set처럼 데이터 중복 저장이 불가능하지만, `Value`는 중복 저장이 가능하다는 점입니다.
+
+### 1. HashMap
+
+`HashMap`은 해시 함수를 통해 `key`와 `value`가 저장되는 위치를 결정하므로, 사용자는 저장되는 위치를 알 수 없고 삽입되는 순서와 위치 또한 관계가 없습니다. HashMap은 해싱(Hashing)을 사용하기 때문에 **많은 양의 데이터를 검색하는데 있어서 뛰어난 성능**을 보입니다.
+
+```java
+HashMap<String, Integer> hashMap = new HashMap<>();
+```
+
+### 2. Hashtable
+
+`Hashtable`은 `HashMap`과 내부 구조가 동일하며 사용방법도 유사합니다.
+
+## 5. Iterator
+
+`Iterator`는 컬렉션에 저장된 요소들을 순차적으로 읽어오는 역할을 수행합니다. Iterator인터페이스에 인터페이스를 반환하는 메서드인 `iterator()`를 호출하면, 컬렉션을 순회하여 반환합니다.
+
+| 메서드    | 설명                                                                                      |
+| --------- | ----------------------------------------------------------------------------------------- |
+| hasNext() | 읽어올 객체가 남아 있으면 true를 리턴하고, 없으면 false를 리턴.                           |
+| next()    | 하나의 객체를 읽음. next()를 호출하기 전 hasNext()로 다음 요소가 있는지 확인필요          |
+| remove()  | next()를 통해 읽어온 객체를 삭제. remove()를 호출하기 전 next()를 호출한 다음에 호출필요. |
+
+## 6. Collection Class
+
+![](https://velog.velcdn.com/images/jgone2/post/8235cb3e-fed1-4ff9-a9a8-69b8a4c734a8/image.png)
