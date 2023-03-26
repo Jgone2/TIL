@@ -21,7 +21,9 @@
 ## 💻 Web, HTTP, Servlet 및 CS, OS
 
 - [인터넷](./CS/internet.md)
+- [브라우저 동작원리](./CS/browser.md)
 - [TCP/IP](./CS/TCP%26IP.md)
+- [HTTP](./CS/http.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br />
 
@@ -34,8 +36,8 @@
 - [x] JVM(추가 공부 필요로 일시 중단)
 - [x] 열거형
 - [x] Generic
-- [ ] Exception Handling
-- [ ] Collection
+- [x] Exception Handling
+- [x] Collection
 - [ ] Annotation
 - [ ] Lambda
 - [ ] Stream
