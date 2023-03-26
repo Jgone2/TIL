@@ -166,3 +166,4 @@ TCP/IP로 네트워크 통신을 진행하게 되면 위의 그림과 같은 과
 - [CLOUDFLARE 학습 센터](https://www.cloudflare.com/ko-kr/learning/)
 - [위키백과- MAC주소](https://ko.wikipedia.org/wiki/MAC_%EC%A3%BC%EC%86%8C)
 - [서현지킴이의 분당라이프 - [TCP] 4-way Handshake란?](https://sh-safer.tistory.com/146)
+- [CodeStates](https://www.codestates.com/course/backend-engineering?gclid=Cj0KCQjw2v-gBhC1ARIsAOQdKY3aTvRr3TyPr_tiDTQV_UDtV7N-zFjWECYE16zC9b_fA9F-x-qQ1psaAoC1EALw_wcB)
