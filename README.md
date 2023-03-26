@@ -20,7 +20,8 @@
 
 ## 💻 Web, HTTP, Servlet 및 CS, OS
 
-- [인터넷의 네트워크 연결방식](./CS/internet.md)
+- [인터넷](./CS/internet.md)
+- [TCP/IP](./CS/TCP%26IP.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br />
 
@@ -47,12 +48,12 @@
 ## 💻 Web, HTTP, Servlet 및 CS, OS
 
 - [x] Internet
+- [x] IP, UDP, TCP, URI, URL
 - [x] HTTP
 - [x] Browser 동작 원리
 - [x] DNS
 - [x] Domain Name
 - [x] Hosting
-- [ ] IP, UDP, TCP, URI, URL
 - [ ] Client-Server Model
 - [ ] JSON, XML, YAML
 - [ ] CGI
