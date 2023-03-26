@@ -16,3 +16,7 @@ PORT는 TCP와 UDP 등이 전송 계층에서 응용 계층에서 어떤 애플�
   - DNS: 53(UDP)
   - HTTP: 80(TCP)
   - HTTPS: 443(TCP)
+
+# 📚Reference
+
+- [CodeStates](https://www.codestates.com/course/backend-engineering?gclid=Cj0KCQjw2v-gBhC1ARIsAOQdKY3aTvRr3TyPr_tiDTQV_UDtV7N-zFjWECYE16zC9b_fA9F-x-qQ1psaAoC1EALw_wcB)
