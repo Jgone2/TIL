@@ -23,6 +23,8 @@
 - [인터넷](./CS/internet.md)
 - [브라우저 동작원리](./CS/browser.md)
 - [TCP/IP](./CS/TCP%26IP.md)
+- [PORT](./CS/port.md)
+- [URI](./CS/uri.md)
 - [HTTP](./CS/http.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br />
@@ -50,10 +52,12 @@
 ## 💻 Web, HTTP, Servlet 및 CS, OS
 
 - [x] Internet
-- [x] IP, UDP, TCP, URI, URL
-- [x] HTTP
 - [x] Browser 동작 원리
+- [x] TCP/IP + UDP
+- [x] PORT
+- [x] URI/URL
 - [x] DNS
+- [x] HTTP
 - [x] Domain Name
 - [x] Hosting
 - [ ] Client-Server Model
