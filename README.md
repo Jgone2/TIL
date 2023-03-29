@@ -26,6 +26,7 @@
 - [PORT](./CS/port.md)
 - [URI](./CS/uri.md)
 - [HTTP](./CS/http.md)
+- [HOSTING](./CS/hosting.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br />
 
@@ -58,7 +59,6 @@
 - [x] URI/URL
 - [x] DNS
 - [x] HTTP
-- [x] Domain Name
 - [x] Hosting
 - [ ] Client-Server Model
 - [ ] JSON, XML, YAML
