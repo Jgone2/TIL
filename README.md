@@ -60,6 +60,8 @@
 - [x] DNS
 - [x] HTTP
 - [x] Hosting
+- [x] OS의 일반적작동방식
+- [x] 프로레스 관리
 - [ ] Client-Server Model
 - [ ] JSON, XML, YAML
 - [ ] CGI
@@ -67,8 +69,6 @@
 - [ ] Servlet life cycle
 - [ ] Thread Pool
 - [x] termianl
-- [x] OS의 일반적작동방식
-- [x] 프로레스 관리
 - [x] 스레드와 동시성
 - [x] 메모리 관리
 - [ ] 프로세스간 통신(IPC)
