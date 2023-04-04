@@ -33,6 +33,7 @@
 ## 📟 Spring
 
 - [스프링 시작기](./Spring/Day1_springStart.md)
+- [IoC / DI](./Spring/Day2_Ioc%26DI.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br />
 
@@ -112,3 +113,4 @@
 ## 📟 Spring
 
 - [x] 스프링 시작기
+- [x] IoC / DI
