@@ -52,4 +52,4 @@
 # 📚 Reference
 
 - [Infrean - 김영한님 스프링 로드맵](https://www.inflearn.com/roadmaps/373)
-- [코드스테이츠 백엔드 부트캠프] (https://www.codestates.com/course/backend-engineering)
+- [코드스테이츠 백엔드 부트캠프](https://www.codestates.com/course/backend-engineering)
