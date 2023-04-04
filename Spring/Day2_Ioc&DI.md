@@ -116,7 +116,7 @@ public class OrderServiceImpl implements OrderService {
 > 💡 **DIP?**
 > Dependency Inversion Principle의 약자로 인터페이스에 의존해야 유연하게 구현체 변겨잉 가능하므로 추상화에 의존해야한다는 원칙이다.
 
-어찌됐든 어디선가는 어떤 구현체를 사용할 것인지 지정을해줘야한다. 이것을 해결하기 위해 로직부분에서의 해결이 아니라 환경설정과 관련된 클래스를 생성하여 따로 설정할 수 있다. 보통 `Config`라고 파일명을 지정하는데 `WebConfig`, `AppConfig`등을 사용한다.
+어찌됐든 어디선가는 어떤 구현체를 사용할 것인지 지정을해줘야한다. 이것을 해결하기 위해 로직부분에서의 해결이 아니라 환경설정(구성)과 관련된 클래스를 생성하여 따로 설정할 수 있다. 보통 `Config`라고 파일명을 지정하는데 `WebConfig`, `AppConfig`등을 사용한다.
 
 **| AppConfig**
 
@@ -175,7 +175,21 @@ public class OrderServiceImpl implements OrderService {
 ```
 
 이렇게 위와 같이 클래스 내부에서 참조할 클래스를 `new`키워드를 사용하여 직접 생성하지 않고, 생성자 등을 통해 외부에서 전달 받고 있으면 `의존성 주입(DI)`이 이루어 지고 있는 것이다.
-Spring에서는 애플리케이션 코드에서 이루어지는 의존성 주입을 대신 해준다.
+
+위의 코드에서 `FixDiscountPolicy`를 `RateDiscountPolicy`로 변경하고 싶다면 `AppConfig`에서 아래와 같이 Fix를 Rate로만 변경하면 된다.
+**| AppConfig**
+
+```java
+public class AppConfig {
+
+		...
+
+        public DiscountPolicy discountPolicy() {
+           // return new FixDiscountPolicy();
+           return new RateDiscountPolicy();
+        }
+}
+```
 
 # 📚 Reference
 
