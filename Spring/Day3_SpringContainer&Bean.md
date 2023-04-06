@@ -225,6 +225,8 @@ public class AppConfig {
 
 ```java
 <beans default-lazy-init="true">
+	<bean>...</bean>
+</beans>
 ```
 
 ## 4. BeanDefinition - 스프링 빈 설정메타데이터
