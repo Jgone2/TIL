@@ -37,6 +37,8 @@
 - [스프링 시작기](./Spring/Day1_springStart.md)
 - [IoC / DI](./Spring/Day2_Ioc%26DI.md)
 - [Spring Container / Bean](./Spring/Day3_SpringContainer%26Bean.md)
+- [Singleton Container - @Configuration](./Spring/Day4_SingletonContainer.md)
+- [@Component Scan / @Autowired](./Spring/Day5_ComponentScan%26Autowired.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br />
 
@@ -118,3 +120,5 @@
 - [x] 스프링 시작기
 - [x] IoC / DI
 - [x] Spring Container & Bean
+- [x] Singleton Container - @Configuration
+- [x] @Component Scan & @Autowired
