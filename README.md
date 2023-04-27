@@ -39,6 +39,7 @@
 - [Spring Container / Bean](./Spring/Day3_SpringContainer%26Bean.md)
 - [Singleton Container - @Configuration](./Spring/Day4_SingletonContainer.md)
 - [@Component Scan / @Autowired](./Spring/Day5_ComponentScan%26Autowired.md)
+- [Spring Bean Life Cycle](./Spring/Day6_BeanLifeCycle.md)
 
 <br /><br /><br /><br /><br /><br /><br /><br />
 
@@ -122,3 +123,4 @@
 - [x] Spring Container & Bean
 - [x] Singleton Container - @Configuration
 - [x] @Component Scan & @Autowired
+- [x] Spring Bean Life Cycle
