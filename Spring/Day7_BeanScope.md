@@ -108,7 +108,7 @@ void singletonBeanFind() {
 ## 3. 싱글톤빈과 프로토타입 빈의 동시사용
 스프링 컨테이너에서 프로토타입 스코프의 빈을 요청했을 때 요청마다 새로운 객체 인스턴스를 생성 및 반환한다. 그러나 싱글톤 빈과 함께 사용하면 문제점이 발생한다. 
 
-**| PrototypeBeanTest**
+**| PrototypeBean**
 ```java
 @Scope("prototype")
 static class PrototypeBean {
@@ -122,5 +122,146 @@ static class PrototypeBean {
 }
 ```
 
+**| PrototypeBeanInSingleton**
+```java
+@Scope	// singleton타입이 default이기 때문에 명시해주지 않아도 된다.
+static class SingletonBean {
+	private final PrototypeBean prototypeBean;
+    
+    public SingletonBean(PrototypeBean prototypeBean) {
+    	this.prototypeBean = prototypeBean;
+    }
+    
+    public int logic() {
+    	prototypeBean.addCount();
+        return prototypeBean.getCount();
+    }
+}
+```
 
+**| PrototypeBeanInSingletonTest**
+```java
+@Test
+void onlyPrototype() {
+	ApplicationContext ac = new AnnotationConfigApplicationContext(PrototypeBean.class);
+	PrototypeBean protoBean1 = ac.getBean(PrototypeBean.class);
+	PrototypeBean protoBean2 = ac.getBean(PrototypeBean.class);
+
+	protoBean1.addCount();
+	protoBean2.addCount();
+	assertThat(protoBean1.getCount()).isEqualTo(1);
+	assertThat(protoBean2.getCount()).isEqualTo(1);
+}
+
+// ====== result ======
+Test Success
+// ====================
+
+@Test
+void protoWithSingleton() {
+	ApplicationContext ac = new ANnotationConfigApplicationContext(SingletonBean.class, PrototypeBean.class);
+    SingletonBean sBean1 = ac.getBean(SingletonBean.class);
+	int count1 = sBean1.logic();
+    assertThat(count1).isEqualTo(1);
+    
+    SingletonBean sBean2 = ac.getBean(SingletonBean.class);
+    int count2 = sBean2.logic();
+    assertThat(count2).isNotEqualTo(1);
+    assertEquals(2, count2);
+}
+// ====== result ======
+Test Success
+// ====================
+```
+위의 테스트에서 첫번째 테스트인 `onlyPrototype()`테스트에서는 프로토타입 스코프만 사용해서 테스트를 수행했다. 프로토 타입만 사용했을 때는 생성과 의존관계 주입까지만 수행한 후 반환될 때 `protoBean2`를 수행할 때 `getCount()`값이 1인 것을 알 수 있다.
+
+하지만 두번째 테스트인 `protoWithSingleton()`테스트에서 싱글톤 빈을 생성한 후 싱글톤 빈에서 프로토타입빈을 주입해서 사용했을 때는 `count`값이 싱글톤타입에서 관리되기 때문에 값이 유지된다. **싱글톤에서 관리되는 프로토타입 빈은 싱글톤 빈 생성시점에 주입되어서 새로 생성되었고, 아래의 사진결과와 같이 사용할 때마다 새로 생성되지 않기 때문이다.**
+
+![](https://velog.velcdn.com/images/jgone2/post/623161af-d854-4aa7-a154-9c6866cca16b/image.png)
+
+위의 결과를 확인하면 PrototypeBean.init이 한번만 수행된 것을 볼 수 있다. 그렇기 때문에 `sBean2`에서 테스트를 수행할 때 `isNotEqualTo(1)`과 `assertEquals(2, count2);`를 수행했을 때 테스트가 성공한 것을 볼 수 있다.
+
+스프링이 일반적으로 싱글톤 빈 환경에서 사용되므로 싱글톤 빈 환경에서 프로토타입 빈이 사용하게 될텐데 위와 같은 문제점이 발생한다.
+
+이 문제점을 어떻게 해결할 수 있을까?
+
+이 문제점은 `Provider`이라는 것을 사용해서 해결할 수 있었다.
+
+## 4. Provider - PrototypeWithSingleton 해결
+
+위의 문제를 해결하기 위해 Provider를 사용할 수 있는데 싱글톤 빈에서 프로토타입 빈을 주입하는 것을 프로토타입을 사용할 때마다 새로 스프링컨테이너에 요청하도록 변경하면 된다. 먼저 `Provider`를 사용하지 않고 변경해보겠다.
+
+**| PrototypeBeanInSingleton**
+```java
+@Scope
+static class SingletonBean {
+	private APllicationContext ac;
+    
+    public int logic() {
+    PrototypeBean prototypeBean = ac.getBean(PrototypeBean.class);
+    	prototypeBean.addCount();
+        return prototypeBean.getCount();
+    }
+}
+```
+위의 방식대로 logic()을 수행할 때마다 항상 새로운 프로토타입을 생성할 수 있다. 외부에서 주입받는 것이 아니라 직접 의존관계를 찾는 것을 `Dependency Lookup(DL)`이라고 한다.
+
+하지만 이 방식을 사용하는 것은 스프링의 `Application Context`를 주입받게 되므로 스프링컨테이너에 종속적이게 되고, 단위 테스트도 어려워 진다는 단점이 존재한다. 이를 해결하기 위해 `Provider`를 사용한다.
+
+### 1. ObjectFactory와 ObjectProvider
+
+위의 방식처럼 개발자가 직접 빈을 주입하지 않고 지정한 빈을 스프링 컨테이너에서 대신 찾아주는 DL 서비스를 제공하는 것이 바로 `ObjectProvider`와 `ObjectFactory`가 있다. 
+
+`ObjectFactory`는 비교적 과거의 기술로 별도의 라이브러리가 필요없는 대신 기능이 단순한 특징이 있다. ObjectFactory에 편의 기능이 추가되어 만들어진 것이 바로 `ObjectProvider`다.
+ObjectFactory를 상속하고 옵션, 스트림 처리 등의 편의 기능이 많으며 별도의 라이브러리가 필요하다는 특징이 있다. 마찬가지로 스프링에 의존하는 기술이다.
+
+**| PrototypeBeanInSingleton**
+```java
+@Scope
+static class SingletonBean {
+//	private ObjectFactory<PrototypeBean> prototypeBeanProvider; // ObjectFactory를 사용할 때
+	private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+    
+    // 생성자 주입
+    ...
+    
+    public int logic() {
+    PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+    	prototypeBean.addCount();
+        return prototypeBean.getCount();
+    }
+}
+```
+`prototypeBeanProvider.getObject()`를 통해서 항상 새로운 프로토타입 빈이 생성되는 것을 알 수 있다. 하지만 `Provider`역시 스프링에 의존하는 기술로 스프링 컨테이너 내부에서만 사용이 가능하다. 
+
+스프링이 아닌 외부의 다른 컨테이너 사용하려면 자바표준 Provider를 사용하면 된다.
+
+### 2. JSR-330 Provider
+
+`javax.inject.Provider`라이브러리를 사용해서 JSR-330 자바 표준을 사용하는 방법을 사용하면 스프링에 의존하지 않고 자바코드 스프링이 아닌 다른 컨테이너에서도 사용가능하다.
+
+먼저 `build.gradle`파일에 라이브러리를 추가해야한다.
+- 스프링부트 3.0 미만: `implementation 'javax.inject:javax.inject:1'`
+- 스프링부트 3.0 이상: `implementation 'jakarta.inject:jakarta.inject-api:x.x.x'`
+
+**| PrototypeBeanInSingleton**
+```java
+@Scope
+static class SingletonBean {
+	private Provider<PrototypeBean> prototypeBeanProvider;
+    
+    //생성자 주입
+    ... 
+    
+    public int logic() {
+    PrototypeBean prototypeBean = prototypeBeanProvider.get();
+    	prototypeBean.addCount();
+        return prototypeBean.getCount();
+    }
+}
+```
+
+JSR-330 자바 표준 `Provider`를 사용하면 `.get()`을 통해서 항상 새로운 프로토타입 빈을 생성한다. `ObjectProvider`처럼 DL 서비스를 제공한다.
+
+이런 방법들 외에도 메서드에 `@Lookup` 애노테이션을 사용하는 방법도 있다. 싱글톤 빈으로 대부분의 문제를 해결할 수 있기 때문에 프로토타입 빈을 직접적으로 사용하는 일은 드물다고 한다. 그렇기 때문에 필요시에 싱글톤 환경에서 프로토타입 빈을 사용하게 된다면 `@Lookup` 애노테이션을 사용한 방식을 사용해 봐야겠다.
 
