@@ -129,7 +129,7 @@ final double PI = 3.141592....
 | 논리형 | boolean                |
 | 문자형 | char                   |
 | 정수형 | byte, short, int, long |
-| 실수형 | long, double           |
+| 실수형 | float, double          |
 
 #### 정수형
 
